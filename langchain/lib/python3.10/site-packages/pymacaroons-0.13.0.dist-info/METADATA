@@ -1,0 +1,59 @@
+Metadata-Version: 2.0
+Name: pymacaroons
+Version: 0.13.0
+Summary: Macaroon library for Python
+Home-page: https://github.com/ecordell/pymacaroons
+Author: Evan Cordell
+Author-email: cordell.evan@gmail.com
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Security :: Cryptography
+Classifier: Topic :: Security
+Requires-Dist: PyNaCl (>=1.1.2,<2.0)
+Requires-Dist: six (>=1.8.0)
+
+
+PyMacaroons
+===========
+
+PyMacaroons is a Python implementation of Macaroons. *They're better than cookies!*
+
+Installation
+------------
+
+Install PyMacaroons by running:
+
+    pip install pymacaroons
+
+Contribute
+----------
+
+- `Issue Tracker`_
+- `Source Code`_
+
+.. _Issue Tracker: https://github.com/ecordell/pymacaroons/issues
+.. _Source Code: https://github.com/ecordell/pymacaroons
+
+License
+-------
+
+The project is licensed under the MIT license.
+
+
+
+

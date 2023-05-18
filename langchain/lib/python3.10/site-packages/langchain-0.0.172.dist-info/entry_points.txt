@@ -1,0 +1,4 @@
+[console_scripts]
+langchain=langchain.cli.main:main
+langchain-server=langchain.server:main
+

@@ -50,7 +50,7 @@ status code, the library will automatically handle the payment and retry the
 request.
 
 Here is a basic example:
-```
+```python
 import requests
 
 from lightning import LndNode

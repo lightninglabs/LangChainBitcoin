@@ -1,5 +1,5 @@
-import lightning_pb2 as ln
-import lightning_pb2_grpc as lnrpc
+from protos import lightning_pb2 as ln
+from protos import lightning_pb2_grpc as lnrpc
 
 import grpc
 import os

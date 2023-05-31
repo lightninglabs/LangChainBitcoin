@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import lightning_pb2 as lightning__pb2
+from protos import lightning_pb2 as lightning__pb2
 
 
 class LightningStub(object):

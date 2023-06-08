@@ -1,3 +1,7 @@
+from pydantic import BaseModel
+
+from typing import Any
+
 import requests
 import re
 
@@ -22,13 +26,19 @@ class RequestsL402Wrapper(object):
         # Extract invoice value
         invoice = re.search(r'invoice="(.*?)"', auth_header).group(1)
 
+        print("Paying invoice: ", invoice)
+
         pre_image = self.lnd_node.pay_invoice(invoice)
+
+        print("Obtained preimage: ", pre_image)
 
         headers = {
             'Authorization': 'LSAT {macaroon}:{pre_image}'.format(
                 macaroon=macaroon, pre_image=pre_image,
             ),
         }
+
+        print("Assembling final authorization header: ", headers)
 
         return headers
 
@@ -40,6 +50,8 @@ class RequestsL402Wrapper(object):
 
             if response.status_code != L402_ERROR_CODE:
                 return response
+
+            print("L402 error path={path}, attempting to pay invoice and retry request...".format(path=args[0]))
 
             L402_auth_header = self._L402_auth(response)
 
@@ -75,9 +87,8 @@ class RequestsL402Wrapper(object):
     def patch(self, url, data=None, **kwargs):
         return
 
-class ResponseTextWrapper(object):
-    def __init__(self, request_wrapper):
-        self.request_wrapper = request_wrapper
+class ResponseTextWrapper(BaseModel):
+    requests_wrapper: Any
 
     @staticmethod
     def response_text(func):
@@ -88,24 +99,24 @@ class ResponseTextWrapper(object):
 
     @response_text
     def get(self, url, **kwargs):
-        return self.request_wrapper.get(url, **kwargs)
+        return self.requests_wrapper.get(url, **kwargs)
 
     @response_text
     def post(self, url, data=None, json=None, **kwargs):
-        return self.request_wrapper.post(url, data, json, **kwargs)
+        return self.requests_wrapper.post(url, data, json, **kwargs)
 
     @response_text
     def put(self, url, data=None, **kwargs):
-        return self.request_wrapper.put(url, data, **kwargs)
+        return self.requests_wrapper.put(url, data, **kwargs)
 
     @response_text
     def delete(self, url, **kwargs):
-        return self.request_wrapper.delete(url, **kwargs)
+        return self.requests_wrapper.delete(url, **kwargs)
 
     @response_text
     def head(self, url, **kwargs):
-        return self.request_wrapper.head(url, **kwargs)
+        return self.requests_wrapper.head(url, **kwargs)
 
     @response_text
     def patch(self, url, data=None, **kwargs):
-        return self.request_wrapper.patch(url, data, **kwargs)
+        return self.requests_wrapper.patch(url, data, **kwargs)

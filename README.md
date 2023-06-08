@@ -43,22 +43,19 @@ This project provides classes to handle Lightning payments (e.g., `LndNode`,
 `LightningNode`) and to manage HTTP requests with L402-based authentication
 (`RequestsL402Wrapper`, `ResponseTextWrapper`).
 
-First, initialize the LndNode with your Lightning node's details. Then, you can
-use the `RequestsL402Wrapper` to send HTTP requests to an API that requires
-L402-based authentication. If the server responds with a 402 Payment Required
-status code, the library will automatically handle the payment and retry the
-request.
+First, initialize the `LndNode` with your Lightning node's details. Then, you
+can use the modified `L402APIChain` wrapper around the normal `APIChain` class
+to instantiate an L402-aware API Chain. If the server responds with a 402
+Payment Required status code, the library will automatically handle the payment
+and retry the request.
 
 Here is a basic example:
 ```python
 import requests
 
 from lightning import LndNode
-from requests_l402 import RequestsL402Wrapper, ResponseTextWrapper
 
-from langchain.chains import APIChain
-from langchain.prompts.prompt import PromptTemplate
-
+from l402_api_chain import L402APIChain
 from langchain.llms import OpenAI
 
 # Initialize LndNode
@@ -69,17 +66,11 @@ lnd_node = LndNode(
     port=10018
 )
 
-# Initialize RequestsL402Wrapper
-requests_L402 = RequestsL402Wrapper(lnd_node, requests)
-lang_chain_request_L402 = ResponseTextWrapper(requests_L402)
-
-# Now you can use lang_chain_request_L402 to send HTTP requests and have the
-# L402 aspect (if needed) handled behind the scenes.
-response = lang_chain_request_L402.get('http://api.example.com')
-
 # You can also use this with an API Chain instance like so:
 llm = OpenAI(temperature=0)
-chain_new = APIChain.from_llm_and_api_docs(llm, API_DOCS, verbose=True)
+chain_new = L402APIChain.from_llm_and_api_docs(
+        llm, API_DOCS, lightning_node=lnd_node, verbose=True,
+)
 
 # Swap our the default wrapper with our L402 aware wrapper.
 chain_new.requests_wrapper = lang_chain_request_L402

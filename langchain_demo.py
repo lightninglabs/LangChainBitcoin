@@ -1,9 +1,6 @@
 from lightning import LndNode
-
-from requests_l402 import RequestsL402Wrapper
-from requests_l402 import ResponseTextWrapper
-
-import requests
+from l402_api_chain import L402APIChain
+from langchain.llms import OpenAI
 
 API_DOCS ='''BASE URL: http://localhost:8085
 
@@ -40,11 +37,6 @@ A JSON object of the set of supported models, which looks similar to:
 if __name__ == "__main__":
     url = 'http://localhost:8085/v1'
 
-    from langchain.chains import APIChain
-    from langchain.prompts.prompt import PromptTemplate
-
-    from langchain.llms import OpenAI
-
     lnd_node = LndNode(
         cert_path='~/gocode/src/github.com/lightningnetwork/lnd/test_lnd2/tls.cert',
         macaroon_path='~/gocode/src/github.com/lightningnetwork/lnd/test_lnd2/data/chain/bitcoin/simnet/admin.macaroon',
@@ -52,14 +44,11 @@ if __name__ == "__main__":
         port=10018
     )
 
-    requests_L402 = RequestsL402Wrapper(lnd_node, requests)
-    lang_chain_request_L402 = ResponseTextWrapper(requests_L402)
-
     llm = OpenAI(temperature=0)
 
-    chain_new = APIChain.from_llm_and_api_docs(llm, API_DOCS, verbose=True)
-
-    chain_new.requests_wrapper = lang_chain_request_L402
+    chain_new = L402APIChain.from_llm_and_api_docs(
+            llm, API_DOCS, lightning_node=lnd_node, verbose=True,
+    )
 
     output = chain_new.run('how many total models are supported?')
     print(output)

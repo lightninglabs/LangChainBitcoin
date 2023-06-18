@@ -7,8 +7,8 @@ from langchain.prompts import BasePromptTemplate
 from langchain.base_language import BaseLanguageModel
 from langchain.chains.llm import LLMChain
 
-from requests_l402 import RequestsL402Wrapper
-from requests_l402 import ResponseTextWrapper
+from .requests_l402 import RequestsL402Wrapper
+from .requests_l402 import ResponseTextWrapper
 
 from lightning import LightningNode
 
@@ -35,8 +35,6 @@ class L402APIChain(APIChain):
 
         get_request_chain = LLMChain(llm=llm, prompt=api_url_prompt)
         get_answer_chain = LLMChain(llm=llm, prompt=api_response_prompt)
-
-        print("wrapper: ", lang_chain_request_L402)
 
         return cls(
             api_request_chain=get_request_chain,

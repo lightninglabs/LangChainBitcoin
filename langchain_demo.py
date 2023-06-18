@@ -1,5 +1,6 @@
 from lightning import LndNode
-from l402_api_chain import L402APIChain
+from L402 import L402APIChain
+
 from langchain.llms import OpenAI
 
 API_DOCS ='''BASE URL: http://localhost:8085

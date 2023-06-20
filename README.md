@@ -4,13 +4,13 @@
 directly interact with Bitcoin and also the Lightning Network. This package has
 two main features:
   
-  * *LLM Agent BitcoinTools*: Using the newly available Open AP GPT-3/4
+  * **LLM Agent BitcoinTools**: Using the newly available Open AP GPT-3/4
     function calls and the built in set of abstractions for tools in
     `langchain`, users can create agents that are capaable of holding Bitcoin
     balance (on-chain and on LN), sending/receiving Bitcoin on LN, and also
     generally interacting with a Lightning node (lnd).
 
-  * *L402 HTTP API Traversal*: LangChainL402 is a Python project that enables
+  * **L402 HTTP API Traversal**: LangChainL402 is a Python project that enables
     users of the `requests` package to easily navigate APIs that require
     [L402](https://docs.lightning.engineering/the-lightning-network/l402) based
     authentication. This project also includes a LangChain APIChain compatible

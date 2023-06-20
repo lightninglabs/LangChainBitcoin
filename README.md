@@ -60,6 +60,9 @@ run/remix: [LLM Bitcoin Tools](llm_bitcoin_tools.ipynb).
 
 ### L402 API Traversal
 
+Check out the contained Jupyter notebook for an interactive example you can
+run/remix: [LangChain402](langchain_L402_agent.ipynb).
+
 This project provides classes to handle Lightning payments (e.g., `LndNode`,
 `LightningNode`) and to manage HTTP requests with L402-based authentication
 (`RequestsL402Wrapper`, `ResponseTextWrapper`).

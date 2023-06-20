@@ -62,11 +62,31 @@ class LndNode(LightningNode):
 
         self._grpc_conn = lnrpc.LightningStub(channel)
 
-    def pay_invoice(self, invoice):
+    def pay_invoice(self, invoice, amt=None):
         pay_resp = self._grpc_conn.SendPaymentSync(
-                ln.SendRequest(payment_request=invoice),
+                ln.SendRequest(payment_request=invoice, amt=amt),
         )
 
         pre_image = binascii.hexlify(pay_resp.payment_preimage).decode('utf-8')
 
         return pre_image
+
+    def send_payment(self, invoice):
+        return self._grpc_conn.SendPaymentSync(
+                ln.SendRequest(payment_request=invoice),
+        )
+
+    def decode_invoice(self, invoice):
+        req = ln.PayReqString(pay_req=invoice)
+        decode_resp = self._grpc_conn.DecodePayReq(req)
+
+        return decode_resp
+
+    def channel_balance(self):
+        return self._grpc_conn.ChannelBalance(ln.ChannelBalanceRequest())
+
+    def wallet_balance(self):
+        return self._grpc_conn.WalletBalance(ln.WalletBalanceRequest())
+
+    def get_info(self):
+        return self._grpc_conn.GetInfo(ln.GetInfoRequest())

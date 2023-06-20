@@ -56,7 +56,7 @@ pip install -r requirements.txt
 ### LLM Agent Bitcoin Tools
 
 Check out the contained Jupyter notebook for an interactive example you can
-run/remix: [LLM Bitcoin Tools](llm_bitcoin.tools.ipynb).
+run/remix: [LLM Bitcoin Tools](llm_bitcoin_tools.ipynb).
 
 ### L402 API Traversal
 
